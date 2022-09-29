@@ -58,13 +58,19 @@
             <div class="row">
                 <h3>POINT OF SALE</h3>
                 <div class="col-md-6">
-                       <form>
-                            <input class="form-control" type="text" name="search" id="search" style="width:300px" placeholder="Search Merchandise Code" />
+                    @if(Session::has('cartprod_add'))
+                            <span class="alert alert-success" style="margin:10px" role="alert">{{Session::get('cartprod_add')}}</span>
+                        @endif
+                <input class="form-control" type="text" name="search" id="search" style="width:300px;margin-top:20px" placeholder="Search Merchandise Code" />
+                       
+                        <form method="post" action="{{route('merch')}}" enctype="multipart/form-data">
+                       
+                            @csrf
                             <input class="form-control" type="text" name="mname" id="mname" style="width:300px" placeholder="Merchandise Name" readonly/>
                             <input class="form-control" type="text" name="mprice" id="mprice" style="width:300px" placeholder="Merchandise Price" readonly/>
                             <input class="form-control" type="number" name="qty" id="qty" style="width:300px" placeholder="Quantity" required/>
-                            <button class="btn btn-primary" type="submit">Add</button>
-                       </form>  
+                            <button class="btn btn-primary" onclick="" type="submit">Add</button>
+                        </form>  
                         
                         
                         
@@ -75,12 +81,13 @@
                         <tbody >
                         </tbody>
                         </table>  -->
+                     
 
                 </div>
 
                 <div class="col-md-6">
                 <div>
-                    <h4 style="text-align:center">Cart</h4>
+                   
                     @if(Session::has('prod_add'))
                             <span class="alert alert-success" style="margin:10px" role="alert">{{Session::get('prod_add')}}</span>
                         @endif
@@ -96,7 +103,8 @@
                             <label for="floatingInput">Date</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="msold" name="merchandisesold" placeholder="Merchandise Sold" required>
+                            <input type="text" class="form-control" id="msold" name="merchandisesold" placeholder="Merchandise Sold" value="
+                           " required>
                             <label for="floatingInput">Merchandise Sold</label>
                         </div>
                         <div class="form-floating mb-3">
@@ -115,7 +123,8 @@
                        
                         <button type="submit" class="btn btn-primary">Save</button>                     
                     </form>  
-                    <a href="print/test"><button class="btn btn-primary" id="print">Print Receipt</button></a>
+                    <a href="print/test"><button class="btn btn-primary" id="print">Print Receipt</button></a><br>
+                    <button onclick="location.reload();"  style="margin-top:10px" class="btn btn-primary">Reset</button>
                 </div>
                 
             </div>
@@ -153,7 +162,7 @@
             {
                 console.log(data);
                 $('#mname').val(data[0].MerchandiseName);
-                $('#total_records').text(data.total_data);
+                $('#mprice').val(data[0].MerchandisePrice);
             }
             })
             }
@@ -165,50 +174,7 @@
             });
         </script>
         <script>
-            window.onload=()=>{
-                let submits = document.getElementsByClassName('add');
-    
-
-                let cart = [];
-                Array.from(submits).forEach((submit) => {
-                    submit.addEventListener('click',(e)=>{
-                         e.preventDefault();
-                        // Do stuff here
-                        setInterval(() => {
-                            const queryString = window.location.search;
-                            console.log(queryString);
-                        }, 200);
-                       
-                        // const urlParams = new URLSearchParams(queryString);
-                        // console.log(urlParams);
-                        // let name =urlParams.get('mname');
-                        // let qty = urlParams.get('qty');
-                        // let price = urlParams.get('mprice')*qty;
-
-                        // let item=[name,qty,price]                    
-                        // console.log(item)
-                    })
-                });
-                
-            }
-                
-
-
-                // setTimeout(() => {
-                //     Interval
-                // }, timeout);(() => {
-                    
-                // const queryString = window.location.search;
-                //     console.log(queryString);
-                //     const urlParams = new URLSearchParams(queryString);
-                // }, 100);
-                // // const urlParams = new URLSearchParams(queryString);
-                // // let name = urlParams.get('mname');
-                // // let qty = document.getElementById('qty').value;
-                // // let price = document.getElementById('mprice').value*qty;
-
-
-                // console.log(document.getElementById('qty').value)
+            
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     </body>
@@ -252,16 +218,5 @@
 
 
 
-                         <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Qty</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <cbody>
-
-                    </cbody>
-                    </table> 
+                        
                     </form> -->

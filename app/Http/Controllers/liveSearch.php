@@ -12,6 +12,7 @@ class liveSearch extends Controller
         return view('welcome');
     }
 
+
     public function action(Request $request){
         if($request->ajax())
         {
@@ -21,10 +22,6 @@ class liveSearch extends Controller
         {
         $data = DB::table('merchandises')
             ->where('MerchandiseCode', 'like', '%'.$query.'%')
-            // ->orWhere('Address', 'like', '%'.$query.'%')
-            // ->orWhere('City', 'like', '%'.$query.'%')
-            // ->orWhere('PostalCode', 'like', '%'.$query.'%')
-            // ->orWhere('Country', 'like', '%'.$query.'%')
             ->get();
             echo json_encode($data);
         }

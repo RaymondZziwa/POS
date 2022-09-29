@@ -3,23 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers;
+use Illuminate\Http\Request;
 use charlieuki\ReceiptPrinter\ReceiptPrinter as ReceiptPrinter;
+use DB;
 
 class PrintController extends Controller
 {
+    public $cart = array();
 
-
-    public function addmerch($MerchandiseName,$MerchandisePrice){
-        $cart = array();
-        $items = array(
-            'name'=> $MerchandiseName,
-            'price'=> $MerchandisePrice
-        );
-        $cart.array_push($item);
+    public function index(){
+        return view('welcome');
     }
 
+    
+    public function addmerch(Request $request){
+        $qty = $request->qty;
+        DB::table('carts')->insert([
+            'merchandise' => $request->mname,
+            'totalPrice' => $request->mprice*$qty       
+        ]);
 
-    public function test($cart)
+        return back()-> with('cartprod_add', 'Merchandise Successfully Added To Cart');
+    }
+
+    public function cartList(){
+        $cartmerchs = DB::table('carts')->get();
+        return view('cart',compact('cartmerchs'));
+    }
+
+    public function test()
     {
         // Set params
         $mid = '123123456';
@@ -32,7 +44,23 @@ class PrintController extends Controller
         $transaction_id = 'TX123ABC456';
 
         // Set items
-        $items = $cart;
+        $items = [
+            [
+                'name'=>'Panadol',
+                'Qty'=>2,
+                'Price'=>2000
+            ],
+            [
+                'name'=>'Dexa',
+                'Qty'=>5,
+                'Price'=>1000
+            ],
+            [
+                'name'=>'Gloves',
+                'Qty'=>3,
+                'Price'=>2500
+            ]
+        ];
 
         // Init printer
         $printer = new ReceiptPrinter;

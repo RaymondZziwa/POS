@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::get('/outgoings', function () {
     return view('outgoings');
@@ -62,7 +64,9 @@ Route::get('/merchandiseoperations',[App\Http\Controllers\MerchandiseController:
 Route::get('/welcome', [App\Http\Controllers\liveSearch::class, 'index']);
 Route::get('/welcome', [App\Http\Controllers\liveSearch::class, 'action'])->name('live_search.action');
 
+
 Route::get('print/test', [App\Http\Controllers\PrintController::class, 'test']);
 
 
-Route::get('/welcome/{MerchandiseName}/{MerchandisePrice}',[App\Http\Controllers\PrintController::class,'addmerch'])->name('merch.add');
+Route::post('/welcome',[App\Http\Controllers\PrintController::class, 'addmerch'])->name('merch');
+Route::get('/cart',[App\Http\Controllers\PrintController::class,'cartList'])->name('cartlist');
